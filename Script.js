@@ -69,3 +69,36 @@ if (search) {
 // INIT
 displayProducts();
 updateCartCount();
+function displayProducts(list = products) {
+  let container = document.getElementById("product-list");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  list.forEach(p => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${p.img}">
+        <h3>${p.name}</h3>
+        <p>₹${p.price}</p>
+        
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
+        
+        <button onclick="buyNow('${p.name}', ${p.price})">
+          ⚡ Buy via WhatsApp
+        </button>
+      </div>
+    `;
+  });
+}
+function buyNow(name, price) {
+  let phone = "919845606417"; // 👈 replace with your number
+
+  let message = `Hello, I want to order:
+Product: ${name}
+Price: ₹${price}`;
+
+  let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+  window.open(url, "_blank");
+}
