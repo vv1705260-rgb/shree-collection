@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
+  <title>Cart</title>
 </head>
 <body>
 
-<h2>Admin Panel</h2>
+<h2>Your Cart</h2>
+<div id="cart-items"></div>
+<h3 id="total"></h3>
 
-<input id="name" placeholder="Product Name">
-<input id="price" placeholder="Price">
-<input id="img" placeholder="Image URL">
-
-<button onclick="addProduct()">Add Product</button>
+<button onclick="checkout()">Place Order</button>
 
 <script>
-function addProduct() {
-  alert("Admin feature coming soon 🚀");
+let products = [
+  { id: 1, name: "Elegant Saree", price: 1200 },
+  { id: 2, name: "Designer Kurti", price: 900 },
+  { id: 3, name: "Luxury Handbag", price: 1500 }
+];
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let total = 0;
+
+let container = document.getElementById("cart-items");
+
+cart.forEach(id => {
+  let item = products.find(p => p.id === id);
+  total += item.price;
+  container.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
+});
+
+document.getElementById("total").innerText = "Total: ₹" + total;
+
+function checkout() {
+  alert("Order placed successfully!");
+  localStorage.removeItem("cart");
+  location.reload();
 }
 </script>
 
